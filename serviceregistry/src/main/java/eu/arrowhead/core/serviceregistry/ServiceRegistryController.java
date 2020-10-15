@@ -14,6 +14,7 @@
 
 package eu.arrowhead.core.serviceregistry;
 
+import java.sql.SQLException;
 import java.time.format.DateTimeParseException;
 
 import org.apache.http.HttpStatus;
@@ -689,14 +690,17 @@ public class ServiceRegistryController {
 			@ApiResponse(code = HttpStatus.SC_INTERNAL_SERVER_ERROR, message = CoreCommonConstants.SWAGGER_HTTP_500_MESSAGE)
 	})
 	@PostMapping(path = CommonConstants.OP_SERVICE_REGISTRY_QUERY_URI, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody public ServiceQueryResultDTO queryRegistry(@RequestBody final ServiceQueryFormDTO form) {
+	@ResponseBody public ServiceQueryResultDTO queryRegistry(@RequestBody final ServiceQueryFormDTO form) throws SQLException {
 		logger.debug("Service query request received");
-		
-		if (Utilities.isEmpty(form.getServiceDefinitionRequirement())) {
+		//----Updated By Aparajita
+		/*if (Utilities.isEmpty(form.getServiceDefinitionRequirement())) {
 			throw new BadPayloadException("Service definition requirement is null or blank" , HttpStatus.SC_BAD_REQUEST, CommonConstants.SERVICE_REGISTRY_URI +
 										  CommonConstants.OP_SERVICE_REGISTRY_QUERY_URI);
 		}
-		
+		if (Utilities.isEmpty(form.getServiceDefinitionRequirement()) || (Utilities.isEmpty(form.getMetadataRequirements().toString()))) {
+			throw new BadPayloadException("Service definition requirement is null or blank" , HttpStatus.SC_BAD_REQUEST, CommonConstants.SERVICE_REGISTRY_URI +
+					CommonConstants.OP_SERVICE_REGISTRY_QUERY_URI);
+		}*/
 		final ServiceQueryResultDTO result = serviceRegistryDBService.queryRegistry(form);
 		logger.debug("Return {} providers for service {}", result.getServiceQueryData().size(), form.getServiceDefinitionRequirement());
 		
