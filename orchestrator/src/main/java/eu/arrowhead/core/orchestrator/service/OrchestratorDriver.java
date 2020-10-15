@@ -118,19 +118,21 @@ public class OrchestratorDriver {
 	public ServiceQueryResultDTO queryServiceRegistry(final ServiceQueryFormDTO form, final boolean metadataSearch, final boolean pingProviders) {
 		logger.debug("queryServiceRegistry started...");
 		Assert.notNull(form, "Form is null.");
-		
 		// overriding settings
 		form.setPingProviders(pingProviders);
-		if (!metadataSearch) {
+		//---------BY Aparajita
+		/*if (!metadataSearch) {
 			form.setMetadataRequirements(null);
-		}
+		}*/
 		
 		final UriComponents queryUri = getQueryUri();
 		final ResponseEntity<ServiceQueryResultDTO> response = httpService.sendRequest(queryUri, HttpMethod.POST, ServiceQueryResultDTO.class, form);
 		
 		return response.getBody();
 	}
-	
+	private void printOut(final Object object) {
+		System.out.println(Utilities.toPrettyJson(Utilities.toJson(object)));
+	}
 	//-------------------------------------------------------------------------------------------------
 	public SystemResponseDTO queryServiceRegistryBySystemId(final long consumerSystemId) {
 		logger.debug("queryByIdServiceRegistry started...");
