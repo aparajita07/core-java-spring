@@ -241,10 +241,14 @@ public class OrchestratorController {
 		}
 		
 		// Requested service
-		if (request.getRequestedService() != null && Utilities.isEmpty(request.getRequestedService().getServiceDefinitionRequirement())) {
+		//---------Updated by Aparajita
+		/*if (request.getRequestedService() != null && (Utilities.isEmpty(request.getRequestedService().getServiceDefinitionRequirement()))) {
+			throw new BadPayloadException("Requested service definition requirement" + NULL_OR_BLANK_PARAMETER_ERROR_MESSAGE , HttpStatus.SC_BAD_REQUEST, origin);
+		}*/
+
+		if (request.getRequestedService() != null && (Utilities.isEmpty(request.getRequestedService().getServiceDefinitionRequirement()) && Utilities.isEmpty(request.getRequestedService().getMetadataRequirements().toString()))) {
 			throw new BadPayloadException("Requested service definition requirement" + NULL_OR_BLANK_PARAMETER_ERROR_MESSAGE , HttpStatus.SC_BAD_REQUEST, origin);
 		}
-		
 		// Preferred Providers
 		if (request.getPreferredProviders() != null) {
 			for (final PreferredProviderDataDTO provider : request.getPreferredProviders()) {
