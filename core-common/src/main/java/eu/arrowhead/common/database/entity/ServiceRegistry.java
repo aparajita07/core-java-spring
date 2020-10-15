@@ -43,7 +43,7 @@ import eu.arrowhead.common.CoreDefaults;
 import eu.arrowhead.common.dto.shared.ServiceSecurityType;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"serviceId", "systemId"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"serviceId", "serviceUri"}))
 public class ServiceRegistry {
 	
 	//=================================================================================================
